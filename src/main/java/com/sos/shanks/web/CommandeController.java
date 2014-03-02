@@ -69,6 +69,12 @@ public class CommandeController extends Controller implements Serializable {
         current = commande;
         return "/commande/edit?faces-redirect=true";
     }
+    
+    public String showEdit(LigneCommande ligneCommande){
+        currentLC = ligneCommande;
+        return "/commande/editLigneCommande?faces-redirect=true";
+    }
+    
     public String showAddLigne(){
         newLC = new LigneCommande();
         return "/commande/addLigneCommande?faces-redirect=true";
@@ -83,12 +89,19 @@ public class CommandeController extends Controller implements Serializable {
     
     public String doCreate(){
         commandeService.create(newCommande);
-        return showList();
+        return showEdit(newCommande);
     }
     
     public String doAddLC(){
         newLC.setCommande(current);
         lcService.create(newLC);
+        commandeService.clearCache();
+        editedCommande = commandeService.find(current.getCommandeId());
+        return showEdit(editedCommande);
+    }
+    
+    public String doDeleteLC(LigneCommande ligne){
+        lcService.remove(ligne);
         commandeService.clearCache();
         editedCommande = commandeService.find(current.getCommandeId());
         return showEdit(editedCommande);

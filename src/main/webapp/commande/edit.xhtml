@@ -38,18 +38,25 @@ and open the template in the editor.
                         <p:commandButton value="Ajouter Une ligne" action="#{commandeController.showAddLigne}" />
                     </h:form>
                     
-                    <p:dataTable value="#{commandeController.current.ligneCommandeList}" var="lignes">
+                    <p:dataTable value="#{commandeController.current.ligneCommandeList}" var="ligne">
                                <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Désignation"/>
                                 </f:facet>
-                                   <h:outputText value="#{lignes.article.designation}" />
+                                   <h:outputText value="#{ligne.article.designation}" />
                                    </p:column>
                         <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Quantite commandé"/>
                                 </f:facet>
-                            <h:outputText value="#{lignes.quantite}" />
+                            <h:outputText value="#{ligne.quantite}" />
+                                   </p:column>
+                        <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Quantite commandé"/>
+                                </f:facet>
+                            <p:commandLink value="Modifier" action="#{commandeController.doDeleteLC(ligne)}" />
+                            <p:commandLink value="Supprimer" action="#{commandeController.doDeleteLC(ligne)}" />
                                    </p:column>
                     </p:dataTable>
                 </f:view>
