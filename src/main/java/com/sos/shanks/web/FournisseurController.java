@@ -50,6 +50,10 @@ public class FournisseurController extends Controller implements Serializable {
     public String showList(){
         return "/fournisseur/list?faces-redirect=true";
     }
+    public String showEdit(Fournisseur fournisseur){
+        current = fournisseur;
+        return "/fournisseur/edit?faces-redirect=true";
+    }
     public String showCreate(){
         newFournisseur = new Fournisseur();
         return "/fournisseur/add?faces-redirect=true";
@@ -66,7 +70,22 @@ public class FournisseurController extends Controller implements Serializable {
         fournisseurService.create(newFournisseur);
         return showList();
     }
-
+    public String doUpdate(){
+        fournisseurService.edit(current);
+        return showList();
+    }
+    
+    public String doRemove(Fournisseur fournisseur){
+        try {
+            fournisseurService.remove(fournisseur);
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+        }
+        //addWarningMessage("Article supprimer de la liste !!!");
+        fournisseurService.clearCache();
+        return showList();
+    }
     // ======================================
     // = Getters & setters =
     // ======================================

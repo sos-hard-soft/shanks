@@ -39,21 +39,13 @@ and open the template in the editor.
                             </p:column>
                             <p:column headerText="Actions">
                                 <p:commandButton value="Editer" action="#{categorieController.showEdit(item)}" icon="ui-icon-disk"/>  
-                                   <p:commandButton value="Supprimer" action="#{categorieController.doRemove(item)}" icon="ui-icon-arrowrefresh-1-w">
-                                       <p:confirm header="Confirmation" message="Etes vous sur de vouloir continuer, suprimer une Categorie suprime tous les articles y faison reference?" icon="ui-icon-alert" />
-                                   </p:commandButton>  
+                                   
                               </p:column>
                         </p:dataTable>
                         
-                         <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
-        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
-        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>    
-    </p:confirmDialog>
+                         
                     </h:form>
                 </f:view>
-
-
-
             </ui:define>
         </ui:composition>
     </h:body>

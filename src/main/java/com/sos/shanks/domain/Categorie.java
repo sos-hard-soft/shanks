@@ -9,6 +9,7 @@ package com.sos.shanks.domain;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,7 +56,7 @@ public class Categorie implements Serializable {
         @JoinColumn(name = "fournisseur", referencedColumnName = "fournisseur_id")})
     @ManyToMany
     private List<Fournisseur> fournisseurList;
-    @OneToMany(mappedBy = "categorie")
+    @OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
     private List<Article> articleList;
 
     public Categorie() {

@@ -50,6 +50,10 @@ public class CategorieController extends Controller implements Serializable {
     public String showList(){
         return "/catalogue/categorie/list?faces-redirect=true";
     }
+    public String showEdit(Categorie categorie){
+        current = categorie;
+        return "/catalogue/categorie/edit?faces-redirect=true";
+    }
     public String showCreate(){
         newCategorie = new Categorie();
         return "/catalogue/categorie/add?faces-redirect=true";
@@ -64,6 +68,22 @@ public class CategorieController extends Controller implements Serializable {
     
     public String doCreate(){
         categorieService.create(newCategorie);
+        return showList();
+    }
+    public String doUpdate(){
+        categorieService.edit(current);
+        return showList();
+    }
+    
+    public String doRemove(Categorie categorie){
+        try {
+            categorieService.remove(categorie);
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+        }
+        //addWarningMessage("Article supprimer de la liste !!!");
+        categorieService.clearCache();
         return showList();
     }
 

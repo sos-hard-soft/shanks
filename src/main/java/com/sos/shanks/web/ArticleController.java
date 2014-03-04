@@ -82,7 +82,7 @@ public class ArticleController extends Controller implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        addWarningMessage("Article supprimer de la liste !!!");
+        //addWarningMessage("Article supprimer de la liste !!!");
         articleService.clearCache();
         return showList();
     }
