@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h1>Liste des cadres</h1>
+    </h:head>
+    <h:body>
+        <ui:composition template="/resources/template.xhtml">
+            <ui:define name="content">	
+                <div></div>
+                <p:messages for="update"/>
+                <f:view>
+
+
+                    <h:form>
+                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Numero:" for="numero" />
+                            <p:inputText id="numero" value="#{paiementController.newPaiement.numero}" title="Numero" />
+                            <p:outputLabel value="DatePaiement:" for="datePaiement" />
+                            <p:inputText id="datePaiement" value="#{paiementController.newPaiement.datePaiement}" title="DatePaiement" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </p:inputText>
+                            <p:outputLabel value="Description:" for="description" />
+                            <p:inputText id="description" value="#{paiementController.newPaiement.description}" title="Description" />
+                            <p:outputLabel value="Facture:" for="facture" />
+                            <p:selectOneMenu id="facture" value="#{paiementController.newPaiement.facture}" >
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItems value="#{factureController.all}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:commandButton value="Enregistrer" action="#{paiementController.doCreate}" />
+                    </h:form>
+                </f:view>
+
+               
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

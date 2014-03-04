@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.sos.shanks.web;
 
 import com.sos.exception.CatchException;
-import com.sos.shanks.domain.Article;
-import com.sos.shanks.service.ArticleFacade;
+import com.sos.shanks.domain.Paiement;
+import com.sos.shanks.service.PaiementFacade;
 import com.sos.util.Loggable;
 import java.io.Serializable;
 import java.util.List;
@@ -27,102 +28,83 @@ import javax.inject.Named;
 @SessionScoped
 @Loggable
 @CatchException
-public class ArticleController extends Controller implements Serializable {
+public class PaiementController extends Controller implements Serializable {
 
     // ======================================
     // = Attributes =
     // ======================================
     @Inject
-    private ArticleFacade articleService;
+    private PaiementFacade paiementService;
 
-    private Article current;
-    private Article newArticle;
-    private List<Article> listArticle;
+    private Paiement current;
+    private Paiement newPaiement;
+    private List<Paiement> listPaiement;
 
     /**
-     * Creates a new instance of ArticleController
+     * Creates a new instance of PaiementController
      */
-    public ArticleController() {
+    public PaiementController() {
     }
     // ======================================
     // = Navigation Methods =
     // ======================================
     public String showList(){
-        return "/catalogue/article/list?faces-redirect=true";
-    }
-    public String showEdit(Article article){
-        current = article;
-        return "/catalogue/article/edit?faces-redirect=true";
+        return "/paiement/list?faces-redirect=true";
     }
     public String showCreate(){
-        newArticle = new Article();
-        return "/catalogue/article/add?faces-redirect=true";
+        newPaiement = new Paiement();
+        return "/paiement/add?faces-redirect=true";
     }
     // ======================================
     // = Public Methods =
     // ======================================
 
-    public List<Article> getAll() {
-        return articleService.findAll();
+    public List<Paiement> getAll() {
+        return paiementService.findAll();
     }
     
     public String doCreate(){
-        articleService.create(newArticle);
+        paiementService.create(newPaiement);
         return showList();
     }
-    
-    public String doUpdate(){
-        articleService.edit(current);
-        return showList();
-    }
-    public String doRemove(Article article){
-        try {
-            articleService.remove(article);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        addWarningMessage("Article supprimer de la liste !!!");
-        articleService.clearCache();
-        return showList();
-    }
+
     // ======================================
     // = Getters & setters =
     // ======================================
-    public Article getCurrent() {
+    public Paiement getCurrent() {
         return current;
     }
 
-    public void setCurrent(Article current) {
+    public void setCurrent(Paiement current) {
         this.current = current;
     }
 
-    public Article getNewArticle() {
-        return newArticle;
+    public Paiement getNewPaiement() {
+        return newPaiement;
     }
 
-    public void setNewArticle(Article newArticle) {
-        this.newArticle = newArticle;
+    public void setNewPaiement(Paiement newPaiement) {
+        this.newPaiement = newPaiement;
     }
     
     // ======================================
     // = Converter =
     // ======================================
-    public Article getArticle(java.lang.Integer id) {
-        return articleService.find(id);
+    public Paiement getPaiement(java.lang.Integer id) {
+        return paiementService.find(id);
     }
 
-    @FacesConverter(forClass = Article.class)
-    public static class ArticleControllerConverter implements Converter {
+    @FacesConverter(forClass = Paiement.class)
+    public static class PaiementControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            ArticleController controller = (ArticleController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "articleController");
-            return controller.getArticle(getKey(value));
+            PaiementController controller = (PaiementController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "paiementController");
+            return controller.getPaiement(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -142,11 +124,11 @@ public class ArticleController extends Controller implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Article) {
-                Article o = (Article) object;
-                return getStringKey(o.getArticleId());
+            if (object instanceof Paiement) {
+                Paiement o = (Paiement) object;
+                return getStringKey(o.getPaiementId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Article.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Paiement.class.getName());
             }
         }
 

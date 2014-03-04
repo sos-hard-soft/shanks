@@ -22,6 +22,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -66,7 +67,10 @@ public class Facture implements Serializable {
     @JoinColumn(name = "fournisseur", referencedColumnName = "fournisseur_id")
     @ManyToOne
     private Fournisseur fournisseur;
-
+    @OneToMany(mappedBy = "facture")
+    private List<Paiement> paiementList;
+    
+    
     public Facture() {
     }
 
@@ -123,6 +127,14 @@ public class Facture implements Serializable {
         this.fournisseur = fournisseur;
     }
 
+    public List<Paiement> getPaiementList() {
+        return paiementList;
+    }
+
+    public void setPaiementList(List<Paiement> paiementList) {
+        this.paiementList = paiementList;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -9,6 +9,7 @@ package com.sos.shanks.domain;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -57,12 +58,12 @@ public class Article implements Serializable {
     @Size(max = 50)
     @Column(name = "unite_mesure")
     private String uniteMesure;
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private List<LigneCommande> ligneCommandeList;
     @JoinColumn(name = "categorie", referencedColumnName = "categorie_id")
     @ManyToOne
     private Categorie categorie;
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private List<LigneLivraison> ligneLivraisonList;
 
     public Article() {

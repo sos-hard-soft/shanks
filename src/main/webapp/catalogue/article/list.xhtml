@@ -23,38 +23,44 @@ and open the template in the editor.
 
                     <h:form>
                         <h1><h:outputText value="List"/></h1>
-                        <p:dataTable value="#{articleController.all}" var="item">
-                           <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Designation"/>
-                                </f:facet>
+                        <p:dataTable value="#{articleController.all}" var="item"  widgetVar="articleTable"
+                                      sortMode="multiple" paginator="true" rows="4"
+                                      >
+                            <f:facet name="header">
+            <p:outputPanel>
+                <h:outputText value="rechercher par mot clé:" />
+                <p:inputText id="globalFilter" onkeyup="articleTable.filter()" style="width:150px" />
+            </p:outputPanel>
+        </f:facet>
+                            
+                            <p:column filterBy="designation" sortBy="designation" headerText="Désignation">
                                 <h:outputText value="#{item.designation}"/>
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Description"/>
-                                </f:facet>
+                            <p:column headerText="Déscription">
                                 <h:outputText value="#{item.description}"/>
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="UniteMesure"/>
-                                </f:facet>
+                            <p:column headerText="Unité de mesure">
                                 <h:outputText value="#{item.uniteMesure}"/>
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="PrixUnitaire"/>
-                                </f:facet>
+                            <p:column filterBy="prixUnitaire" headerText="Prix Unitaire">
                                 <h:outputText value="#{item.prixUnitaire}"/>
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Categorie"/>
-                                </f:facet>
+                            <p:column filterBy="categorie.designation" sortBy="categorie.designation" headerText="Catégorie">
                                 <h:outputText value="#{item.categorie.designation}"/>
                             </p:column>
+                            <p:column headerText="Actions">
+                                <p:commandButton value="Editer" action="#{articleController.showEdit(item)}" icon="ui-icon-disk"/>  
+                                   <p:commandButton value="Supprimer" action="#{articleController.doRemove(item)}" icon="ui-icon-arrowrefresh-1-w">
+                                       <p:confirm header="Confirmation" message="Etes vous sur de vouloir continuer, suprimer un article suprime tous les commande et livraison y faison reference?" icon="ui-icon-alert" />
+                                   </p:commandButton>  
+                              </p:column>
                         </p:dataTable>
+                        
+                        
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>    
+    </p:confirmDialog>
                     </h:form>
                 </f:view>
 
