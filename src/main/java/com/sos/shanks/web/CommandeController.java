@@ -69,8 +69,11 @@ public class CommandeController extends Controller implements Serializable {
         current = commande;
         return "/commande/edit?faces-redirect=true";
     }
-    
-    public String showEdit(LigneCommande ligneCommande){
+     public String showView(Commande commande){
+        current = commande;
+        return "/commande/view?faces-redirect=true";
+    }
+    public String showEditLC(LigneCommande ligneCommande){
         currentLC = ligneCommande;
         return "/commande/editLigneCommande?faces-redirect=true";
     }
@@ -91,7 +94,11 @@ public class CommandeController extends Controller implements Serializable {
         commandeService.create(newCommande);
         return showEdit(newCommande);
     }
-    
+     public String doRemove(Commande commande){
+        commandeService.remove(commande);
+        commandeService.clearCache();
+        return showList();
+    }
     public String doAddLC(){
         newLC.setCommande(current);
         lcService.create(newLC);
@@ -100,13 +107,22 @@ public class CommandeController extends Controller implements Serializable {
         return showEdit(editedCommande);
     }
     
-    public String doDeleteLC(LigneCommande ligne){
+    public String doRemoveLC(LigneCommande ligne){
         lcService.remove(ligne);
         commandeService.clearCache();
         editedCommande = commandeService.find(current.getCommandeId());
         return showEdit(editedCommande);
     }
-
+    public String doEditLC(){
+        lcService.edit(currentLC);
+        commandeService.clearCache();
+        editedCommande = commandeService.find(current.getCommandeId());
+        return showEdit(editedCommande);
+    }
+    public String doUpdate(){
+        commandeService.edit(current);
+        return showList();
+    }
     // ======================================
     // = Getters & setters =
     // ======================================

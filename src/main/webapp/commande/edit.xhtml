@@ -36,7 +36,7 @@ and open the template in the editor.
                             <p:outputLabel id="fournisseur" value="#{commandeController.current.fournisseur.raisonSocial}" />
                         </p:panelGrid>
                         <p:commandButton value="Ajouter Une ligne" action="#{commandeController.showAddLigne}" />
-                    </h:form>
+                    
                     
                     <p:dataTable value="#{commandeController.current.ligneCommandeList}" var="ligne">
                                <p:column>
@@ -55,14 +55,18 @@ and open the template in the editor.
                                 <f:facet name="header">
                                     <h:outputText value="Quantite commandé"/>
                                 </f:facet>
-                            <p:commandLink value="Modifier" action="#{commandeController.doDeleteLC(ligne)}" />
-                            <p:commandLink value="Supprimer" action="#{commandeController.doDeleteLC(ligne)}" />
+                            <p:commandButton value="Modifier" action="#{commandeController.showEditLC(ligne)}" icon="ui-icon-disk"/>
+                            <p:commandButton value="Supprimer" action="#{commandeController.doRemoveLC(ligne)}" icon="ui-icon-arrowrefresh-1-w">
+                                       <p:confirm header="Confirmation" message="Etes vous sur de vouloir continuer, suprimer un article suprime tous les commande et livraison y faison reference?" icon="ui-icon-alert" />
+                                   </p:commandButton>  
                                    </p:column>
                     </p:dataTable>
-                </f:view>
+                        
+                
 
-
-
+                <p:commandButton value="Enregistrer" action="#{commandeController.doUpdate}" />   
+            </h:form>
+                    </f:view>
             </ui:define>
         </ui:composition>
     </h:body>

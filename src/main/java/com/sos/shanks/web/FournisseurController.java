@@ -6,7 +6,9 @@
 package com.sos.shanks.web;
 
 import com.sos.exception.CatchException;
+import com.sos.shanks.domain.Categorie;
 import com.sos.shanks.domain.Fournisseur;
+import com.sos.shanks.service.CategorieFacade;
 import com.sos.shanks.service.FournisseurFacade;
 import com.sos.util.Loggable;
 import java.io.Serializable;
@@ -39,6 +41,10 @@ public class FournisseurController extends Controller implements Serializable {
     private Fournisseur newFournisseur;
     private List<Fournisseur> listFournisseur;
 
+    @Inject
+    private CategorieFacade categorieService;
+
+    private Categorie selectedCategorie;
     /**
      * Creates a new instance of FournisseurController
      */
@@ -48,6 +54,7 @@ public class FournisseurController extends Controller implements Serializable {
     // = Navigation Methods =
     // ======================================
     public String showList(){
+        fournisseurService.clearCache();
         return "/fournisseur/list?faces-redirect=true";
     }
     public String showEdit(Fournisseur fournisseur){
@@ -57,6 +64,10 @@ public class FournisseurController extends Controller implements Serializable {
     public String showCreate(){
         newFournisseur = new Fournisseur();
         return "/fournisseur/add?faces-redirect=true";
+    }
+    public String showAddCategorie(){
+        selectedCategorie = new Categorie();
+        return "/fournisseur/addCategorie?faces-redirect=true";
     }
     // ======================================
     // = Public Methods =
@@ -70,7 +81,10 @@ public class FournisseurController extends Controller implements Serializable {
         fournisseurService.create(newFournisseur);
         return showList();
     }
+    
     public String doUpdate(){
+        System.out.println(current.getCategorieList().get(0).getDesignation());
+        categorieService.edit(selectedCategorie);
         fournisseurService.edit(current);
         return showList();
     }
@@ -79,12 +93,16 @@ public class FournisseurController extends Controller implements Serializable {
         try {
             fournisseurService.remove(fournisseur);
         } catch (Exception e) {
-            e.printStackTrace();
-            
         }
         //addWarningMessage("Article supprimer de la liste !!!");
         fournisseurService.clearCache();
         return showList();
+    }
+    public String doAddCategorie(Categorie categorie){
+        selectedCategorie = categorie;
+        categorie.getFournisseurList().add(current);
+        current.getCategorieList().add(categorie);
+        return showEdit(current);
     }
     // ======================================
     // = Getters & setters =

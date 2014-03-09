@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h1>Détails de l'article : #{articleController.current.designation}</h1>
+    </h:head>
+    <h:body>
+        <ui:composition template="/resources/template.xhtml">
+            <ui:define name="content">	
+                <div></div>
+                <p:messages for="update"/>
+
+                <f:view>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Désingnation :" />
+                        <h:outputText id="designation" value="#{articleController.current.designation}" />
+                        <p:outputLabel value="Déscription :" />
+                        <h:outputText id="description" value="#{articleController.current.description}" />
+                        
+                        <p:outputLabel value="Catégorie :" />
+                        <h:outputText id="categorie" value="#{articleController.current.categorie.designation}" />
+                        
+                        <p:outputLabel value="Prix unitaire :" />
+                        <h:outputText id="prixUnitaire" value="#{articleController.current.prixUnitaire}" />
+                        <p:outputLabel value="Unité de mesure :" />
+                        <h:outputText id="uniteMesure" value="#{articleController.current.uniteMesure}" />
+                    </p:panelGrid>
+                    
+                    
+                    <p:tabView id="tabView" dynamic="true" cache="true">  
+  
+        <p:tab id="tba1" title="Liste des fournisseur de cet article">  
+            
+                        <p:dataTable value="#{articleController.current.categorie.fournisseurList}" var="fournisseur">
+                            <p:column headerText="Raison social">
+                                <h:outputText value="#{fournisseur.raisonSocial}" />
+                            </p:column>
+                            <p:column headerText="Email">
+                                <h:outputText value="#{fournisseur.email}" />
+                            </p:column>
+                            <p:column headerText="Téléphonne">
+                                <h:outputText value="#{fournisseur.telephone}" />
+                            </p:column>
+                            <p:column headerText="Adresse">
+                                <h:outputText value="#{fournisseur.adresse}" />
+                            </p:column>
+                        </p:dataTable>
+          
+        </p:tab>  
+  
+        <p:tab id="tab2" title="Commande contenant l'article">  
+            <p:dataTable value="#{articleController.current.ligneCommandeList}" var="lc">
+                            <p:column headerText="Numéro de la commande">
+                                <h:outputText value="#{lc.commande.numeroCommande}" />
+                            </p:column>
+                            <p:column headerText="Date de la commande">
+                                <h:outputText value="#{lc.commande.dateCommande}" />
+                            </p:column>
+                            <p:column headerText="Quantité commandé">
+                                <h:outputText value="#{lc.quantite}" />
+                            </p:column>
+                            
+                        </p:dataTable>
+        </p:tab>  
+  
+        <p:tab id="tab3" title="Livraison contenant l'article">  
+            <p:dataTable value="#{articleController.current.ligneLivraisonList}" var="ll">
+                            <p:column headerText="Numéro de la livraison">
+                                <h:outputText value="#{ll.livraison.numeroLivraison}" />
+                            </p:column>
+                            <p:column headerText="Date de la livraison">
+                                <h:outputText value="#{ll.livraison.dateLivraison}" />
+                            </p:column>
+                            <p:column headerText="Quantité livré">
+                                <h:outputText value="#{ll.quantite}" />
+                            </p:column>
+                            <p:column headerText="Détails">
+                                <h:outputText value="#{ll.livraison.details}" />
+                            </p:column>
+                        </p:dataTable>  
+        </p:tab>  
+  
+    </p:tabView>  
+                    
+                    
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

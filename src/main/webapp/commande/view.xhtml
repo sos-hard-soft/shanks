@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h1>Liste des cadres</h1>
+    </h:head>
+    <h:body>
+        <ui:composition template="/resources/template.xhtml">
+            <ui:define name="content">	
+                <div></div>
+                <p:messages for="update"/>
+                <f:view>
+                    <h:form>
+                    </h:form>
+                    <div class="col-8">
+                    <div class="col-3 col-lg-2">
+                        <strong>E.D.O.C <h3>S.A.R.L</h3></strong>
+                                > Traveaux divers<br />
+                                    >Construction<br />
+                                        >Fournitures
+                    </div>
+                    <div class="col-offset-3">
+                        <h3>BON DE COMMANDE</h3>
+                        N° : #{commandeController.current.numeroCommande}<br />
+                        Oujda le #{commandeController.current.dateCommande}
+                    </div>
+                    </div>
+                    <div class="col-8">
+                        M : 
+                    </div>
+                    <div class="col-8">
+                        <p:dataTable value="#{commandeController.current.ligneCommandeList}" var="item">
+                            <p:column headerText="Quantité">
+                                <p:outputLabel value="#{item.quantite}" />
+                            </p:column>
+                            <p:column headerText="Désignation">
+                                <p:outputLabel value="#{item.article.designation}" />
+                            </p:column>
+                            <p:column headerText="Prix Unitaire">
+                                <p:outputLabel value="#{item.article.prixUnitaire}" />
+                            </p:column>
+                            <p:column headerText="Prix Total">
+                                <p:outputLabel value="#{item.quantite*item.article.prixUnitaire}" />
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                    <div class="col-8">
+                        <strong>187, Bd derfoufi 1<sup>er</sup> Etage n°2 - Oujda / Tél: 05 36 68 66 82 Fax : 05 36 71 29 60 - Email: edoc@edoc.com</strong> 
+                    </div>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

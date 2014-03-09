@@ -24,17 +24,15 @@ and open the template in the editor.
                     <h:form>
                         <h1><h:outputText value="Create/Edit"/></h1>
                         <p:panelGrid columns="2">
-                            <p:selectOneMenu id="article" value="#{commandeController.newLC.article}" >
-                                <!-- TODO: update below reference to list of available items-->
-                                <f:selectItems value="#{articleController.all}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="Quantite:" for="quantite" />
-                            <p:inputText id="quantite" value="#{commandeController.newLC.quantite}" title="Quantite" />
                             <p:outputLabel value="Article:" for="article" />
+                            <p:outputLabel id="article" value="#{commandeController.currentLC.article.designation}" />
+                            <p:outputLabel value="Quantite:" for="quantite" />
+                            <p:inputText id="quantite" value="#{commandeController.currentLC.quantite}" title="Quantite" />
+                            
                             
                         </p:panelGrid>
                         
-                        <p:commandButton value="Enregistrer" action="#{commandeController.doAddLC}" />
+                        <p:commandButton value="Enregistrer" action="#{commandeController.doEditLC}" />
                     </h:form>
                 </f:view>
 

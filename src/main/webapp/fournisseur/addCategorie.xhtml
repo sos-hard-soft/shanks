@@ -34,12 +34,12 @@ and open the template in the editor.
                             <p:column filterBy="designation" sortBy="designation" headerText="Désignation">
                                 <h:outputText value="#{item.designation}"/>
                             </p:column>
-                            <p:column>
+                            <p:column headerText="Déscription">
                                 <h:outputText value="#{item.description}"/>
                             </p:column>
                             <p:column headerText="Actions">
-                                <p:commandButton value="Editer" action="#{categorieController.showEdit(item)}" icon="ui-icon-disk"/>  
-                                   
+                                <p:commandButton value="Ajouter au fournisseur" rendered="#{!fournisseurController.current.categorieList.contains(item)}" action="#{fournisseurController.doAddCategorie(item)}" icon="ui-icon-disk"/>  
+                                <p:outputLabel value="Déja dans la liste" rendered="#{fournisseurController.current.categorieList.contains(item)}" />  
                               </p:column>
                         </p:dataTable>
                         

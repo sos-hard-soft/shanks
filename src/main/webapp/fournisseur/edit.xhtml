@@ -19,7 +19,7 @@ and open the template in the editor.
                 <p:messages for="update"/>
 
                 <f:view>
-                    <p:commandButton value="Associer des categorie au fournisseur" />
+                    <p:commandButton value="Associer des categorie au fournisseur" action="#{fournisseurController.showAddCategorie}" />
 
 
                     <h:form>
@@ -38,7 +38,14 @@ and open the template in the editor.
                             <p:outputLabel value="Email:" for="email" />
                             <p:inputText id="email" value="#{fournisseurController.current.email}" title="Email" />
                         </p:panelGrid>
-                        
+                        <p:dataTable value="#{fournisseurController.current.categorieList}" var="item">
+                            <p:column filterBy="designation" sortBy="designation" headerText="Désignation">
+                                <h:outputText value="#{item.designation}"/>
+                            </p:column>
+                            <p:column filterBy="description" sortBy="description" headerText="Déscription">
+                                <h:outputText value="#{item.description}"/>
+                            </p:column>
+                        </p:dataTable>
                         <p:commandButton value="Enregistrer" action="#{fournisseurController.doUpdate}" />
                     </h:form>
                 </f:view>

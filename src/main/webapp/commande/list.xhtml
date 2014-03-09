@@ -23,38 +23,39 @@ and open the template in the editor.
 
                     <h:form>
                         <h1><h:outputText value="List"/></h1>
-                        <p:dataTable value="#{commandeController.all}" var="item">
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="NumeroCommande"/>
-                                </f:facet>
-                                <p:commandLink action="#{commandeController.showEdit(item)}" value="#{item.numeroCommande}"/>
+                        <p:dataTable value="#{commandeController.all}" var="item" widgetVar="commandeTable" sortMode="multiple" paginator="true" rows="4">
+                            <f:facet name="header">
+            <p:outputPanel>
+                <h:outputText value="rechercher par mot clé:" />
+                <p:inputText id="globalFilter" onkeyup="commandeTable.filter()" style="width:150px" />
+            </p:outputPanel>
+        </f:facet>
+                            <p:column filterBy="numero" sortBy="numero" headerText="Numéro de la commande">
+                                <h:outputText value="#{item.numeroCommande}"/>
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="DateCommande"/>
-                                </f:facet>
-                                <h:outputText value="#{item.dateCommande}">
-                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <p:column sortBy="date" headerText="Date de la commande">
+                               <h:outputText value="#{item.dateCommande}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
                                 </h:outputText>
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Status"/>
-                                </f:facet>
+                            <p:column headerText="Statuts">
                                 <h:outputText value="#{item.status}"/>
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Fournisseur"/>
-                                </f:facet>
+                            <p:column filterBy="fournisseur.raisonSocial" sortBy="fournisseur.raisonSocial" headerText="Fournisseur">
                                 <h:outputText value="#{item.fournisseur.raisonSocial}"/>
                             </p:column>
+                            <p:column headerText="Actions">
+                                <p:commandButton value="Détails" action="#{commandeController.showView(item)}" icon="ui-icon-folder-open"/>
+                                <p:commandButton value="Editer" action="#{commandeController.showEdit(item)}" icon="ui-icon-pencil"/>  
+                                   <p:commandButton value="Supprimer" action="#{commandeController.doRemove(item)}" icon="ui-icon-trash">
+                                       <p:confirm header="Confirmation" message="Etes vous sur de vouloir continuer, suprimer une Commande suprime toutes les lignes y faison reference?" icon="ui-icon-alert" />
+                                   </p:commandButton>  
+                              </p:column>
                         </p:dataTable>
                     </h:form>
                 </f:view>
 
-
+             
             </ui:define>
         </ui:composition>
     </h:body>

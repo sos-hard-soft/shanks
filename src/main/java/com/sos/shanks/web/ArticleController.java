@@ -48,6 +48,7 @@ public class ArticleController extends Controller implements Serializable {
     // = Navigation Methods =
     // ======================================
     public String showList(){
+        articleService.clearCache();
         return "/catalogue/article/list?faces-redirect=true";
     }
     public String showEdit(Article article){
@@ -57,6 +58,10 @@ public class ArticleController extends Controller implements Serializable {
     public String showCreate(){
         newArticle = new Article();
         return "/catalogue/article/add?faces-redirect=true";
+    }
+     public String showView(Article article){
+        current = article;
+        return "/catalogue/article/view?faces-redirect=true";
     }
     // ======================================
     // = Public Methods =
